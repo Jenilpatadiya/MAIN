@@ -1,11 +1,11 @@
-/* Reset */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Variables */
+
 :root {
   --primary-color: #a020f0;
   --accent-color: #f39c12;
@@ -15,7 +15,7 @@
   --text-muted: #ccc;
 }
 
-/* Body */
+
 body {
   font-family: 'Poppins', sans-serif;
   background: var(--bg-gradient);
@@ -23,7 +23,7 @@ body {
   scroll-behavior: smooth;
 }
 
-/* Header */
+
 header {
   background: #111;
   padding: 20px 40px;
@@ -54,7 +54,7 @@ nav a:hover {
   color: var(--accent-color);
 }
 
-/* Hero Section */
+
 .hero {
   display: flex;
   align-items: center;
@@ -151,7 +151,7 @@ nav a:hover {
   50% { transform: translateY(-20px); }
 }
 
-/* Section Basics */
+
 section {
   padding: 60px 40px;
   text-align: center;
@@ -166,7 +166,7 @@ section {
   color: var(--primary-color);
 }
 
-/* About */
+
 .about p {
   max-width: 800px;
   margin: auto;
@@ -184,7 +184,7 @@ section {
   text-decoration: none;
 }
 
-/* Skills */
+
 .skill-bar {
   margin: 20px auto;
   width: 70%;
@@ -213,7 +213,7 @@ section {
 }
 
 
-/* Education Timeline */
+
 .timeline {
   display: flex;
   flex-direction: column;
@@ -240,7 +240,7 @@ section {
   font-weight: bold;
 }
 
-/* Projects */
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -294,13 +294,11 @@ section {
   margin-right: 8px;
 }
 
-/* Contact */
 .contact p {
   font-size: 18px;
   margin: 10px 0;
 }
 
-/* Footer */
 footer {
   background: #111;
   padding: 20px;
@@ -308,7 +306,6 @@ footer {
   color: #aaa;
 }
 
-/* Back to Top */
 .back-to-top {
   position: fixed;
   bottom: 20px;
@@ -321,3 +318,4 @@ footer {
   text-decoration: none;
   display: none;
 }
+
