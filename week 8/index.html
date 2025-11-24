@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date, Time & Timers</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0d012b;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 30px 35px;
+      border-radius: 15px;
+      text-align: center;
+      width: 420px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 200, 255, 0.4);
+      box-shadow: 0 0 25px rgba(0, 200, 255, 0.4);
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 12px #00eaff;
+    }
+
+    .clock-section, .stopwatch-section {
+      margin: 25px 0;
+    }
+
+    #digitalClock, #stopwatch {
+      font-size: 2.4em;
+      font-weight: bold;
+      margin: 10px 0;
+      color: #00eaff;
+      text-shadow: 0 0 15px #00eaff;
+      letter-spacing: 2px;
+    }
+
+    #todayDate {
+      opacity: 0.9;
+      font-size: 14px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 10px 25px;
+      border: none;
+      border-radius: 8px;
+      background: #009dff;
+      color: white;
+      cursor: pointer;
+      font-size: 15px;
+      letter-spacing: 1px;
+      transition: 0.25s;
+      box-shadow: 0 0 12px rgba(0, 140, 255, 0.7);
+      text-transform: uppercase;
+    }
+
+    button:hover {
+      background: #0073c7;
+      box-shadow: 0 0 18px rgba(0, 200, 255, 1);
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="container">
+    <h1>⏰ Date, Time & Timers</h1>
+
+    <div class="clock-section">
+      <h2>🕒 Digital Clock</h2>
+      <p id="digitalClock">00:00:00</p>
+      <p id="todayDate"></p>
+    </div>
+
+    <div class="stopwatch-section">
+      <h2>⏱ Stopwatch</h2>
+      <p id="stopwatch">00:00:00</p>
+      <div class="buttons">
+        <button id="startBtn">Start</button>
+        <button id="stopBtn">Stop</button>
+        <button id="resetBtn">Reset</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+function updateClock() {      
+  let now = new Date();    
+  let hours = now.getHours();  
+  let minutes = now.getMinutes();  
+  let seconds = now.getSeconds();  
+    
+  hours = hours < 10 ? "0" + hours : hours;  
+  minutes = minutes < 10 ? "0" + minutes : minutes;  
+  seconds = seconds < 10 ? "0" + seconds : seconds;  
+    
+  document.getElementById("digitalClock").innerText =
+    `${hours}:${minutes}:${seconds}`;  
+    
+  let dateStr = now.toDateString();  
+  document.getElementById("todayDate").innerText = dateStr;  
+}  
+    
+setInterval(updateClock, 1000);  
+updateClock();  
+    
+let stopwatchInterval;  
+let elapsedSeconds = 0;  
+    
+function formatTime(seconds) {  
+  let hrs = Math.floor(seconds / 3600);  
+  let mins = Math.floor((seconds % 3600) / 60);  
+  let secs = seconds % 60;  
+    
+  hrs = hrs < 10 ? "0" + hrs : hrs;  
+  mins = mins < 10 ? "0" + mins : mins;  
+  secs = secs < 10 ? "0" + secs : secs;  
+    
+  return `${hrs}:${mins}:${secs}`;  
+}  
+    
+document.getElementById("startBtn").addEventListener("click", function () {  
+  if (!stopwatchInterval) {  
+    stopwatchInterval = setInterval(() => {  
+      elapsedSeconds++;  
+      document.getElementById("stopwatch").innerText = formatTime(elapsedSeconds);  
+    }, 1000);  
+  }  
+});  
+    
+document.getElementById("stopBtn").addEventListener("click", function () {  
+  clearInterval(stopwatchInterval);  
+  stopwatchInterval = null;  
+});  
+    
+document.getElementById("resetBtn").addEventListener("click", function () {  
+  clearInterval(stopwatchInterval);  
+  stopwatchInterval = null;  
+  elapsedSeconds = 0;  
+  document.getElementById("stopwatch").innerText = "00:00:00";  
+});
+</script>
+
+</body>
+</html>

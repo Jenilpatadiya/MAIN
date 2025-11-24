@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Poppins, sans-serif;
+      background: linear-gradient(135deg, #0a0025, #24006b, #00376b);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+
+    .weather-box {
+      background: rgba(255, 255, 255, 0.07);
+      padding: 35px;
+      width: 380px;
+      border-radius: 18px;
+      backdrop-filter: blur(12px);
+      text-align: center;
+      box-shadow: 0 0 25px rgba(0, 170, 255, 0.5);
+      border: 1px solid rgba(0, 200, 255, 0.4);
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 12px #00eaff;
+    }
+
+    input {
+      width: 90%;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(0, 200, 255, 0.4);
+    }
+
+    button {
+      margin-top: 18px;
+      width: 95%;
+      padding: 13px;
+      border: none;
+      border-radius: 12px;
+      background: #00aaff;
+      color: #fff;
+      font-size: 17px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.25s;
+      box-shadow: 0 0 18px rgba(0, 200, 255, 0.7);
+      letter-spacing: 1px;
+    }
+
+    button:hover {
+      background: #0088d6;
+      box-shadow: 0 0 25px rgba(0, 200, 255, 1);
+    }
+
+    .result {
+      margin-top: 25px;
+      display: none;
+      animation: slideUp 0.4s ease;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .temp {
+      font-size: 55px;
+      font-weight: bold;
+      text-shadow: 0 0 20px #00eaff;
+      margin-bottom: 5px;
+    }
+
+    .details {
+      font-size: 18px;
+      margin-top: 10px;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="weather-box">
+    <h2>🌤️ Weather App</h2>
+
+    <input type="text" id="cityInput" placeholder="Enter city name...">
+    <button onclick="getWeather()">Get Weather</button>
+
+    <div class="result" id="resultBox">
+      <p class="temp" id="temp"></p>
+      <p class="details" id="details"></p>
+    </div>
+  </div>
+
+  <script>
+    function getWeather() {
+      const city = document.getElementById("cityInput").value.trim();
+      if (city === "") return alert("Please enter a city name!");
+
+      fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}`)
+        .then(res => res.json())
+        .then(data => {
+          if (!data.results) {
+            alert("City not found!");
+            return;
+          }
+
+          let lat = data.results[0].latitude;
+          let lon = data.results[0].longitude;
+
+          fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
+            .then(res => res.json())
+            .then(weather => {
+              let temp = weather.current_weather.temperature;
+              let wind = weather.current_weather.windspeed;
+
+              document.getElementById("temp").innerHTML = `${temp}°C`;
+              document.getElementById("details").innerHTML =
+                `💨 Wind: ${wind} km/h<br>📍 Location: <b>${city}</b>`;
+
+              document.getElementById("resultBox").style.display = "block";
+            });
+        });
+    }
+  </script>
+
+</body>
+</html>
